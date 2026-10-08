@@ -47,14 +47,14 @@
           "type": "question",
           "settings": {
             "question": "Where do you ship?",
-            "answer": "<p>Available countries, shipping costs and delivery times are shown at checkout before you pay.</p>"
+            "answer": "<p><strong>Belgium:</strong> standard €7, <strong>free from €70</strong>, express €11.<br><strong>International</strong> (EU, UK, Switzerland, Norway, US, Canada, Australia, Japan and more): €16.</p><p>Available countries and estimated delivery times are shown at checkout. Orders ship from Belgium.</p>"
           }
         },
         "q5": {
           "type": "question",
           "settings": {
             "question": "Can I return or exchange?",
-            "answer": "<p>Check our refund policy (link in the footer). Questions about an order? Send us a message with your order number.</p>"
+            "answer": "<p>Yes. You have <strong>14 days</strong> after delivery to change your mind. Email us with your order number, then send the items back unworn and unwashed with their tags. Return shipping is on you unless the item is faulty. Full details in our refund policy (link in the footer).</p>"
           }
         },
         "q6": {
