@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order {{ order_name }} out for delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;background:#0B0B0C;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0B0B0C;">
+<tr><td align="center">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#0B0B0C;">
+<tr><td style="padding:0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td width="20%" height="6" style="background:#FFCC00;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#2F6FED;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#D32F2F;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#E8399C;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#FF7A1A;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td align="center" style="padding:28px 24px 8px;font-family:'Archivo Black','Arial Black',Arial,sans-serif;font-size:26px;letter-spacing:1px;color:#F5F0E8;"><a href="{{ shop.url }}" style="color:#F5F0E8;text-decoration:none;">AURASIM</a></td></tr>
+<tr><td style="padding:26px 24px 0;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #2A2A2D;"><tr>
+<td align="left" style="padding-bottom:10px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#D32F2F;">Out for delivery</td>
+<td align="right" style="padding-bottom:10px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#F5F0E8;">Order {{ order_name }}</td>
+</tr></table>
+</td></tr>
+<tr><td style="padding:24px 24px 6px;font-family:'Archivo Black','Arial Black',Arial,sans-serif;font-size:44px;line-height:44px;text-transform:uppercase;color:#F5F0E8;">Arriving</td></tr>
+<tr><td style="padding:0 24px 22px;font-family:'Archivo Black','Arial Black',Arial,sans-serif;font-size:44px;line-height:44px;text-transform:uppercase;color:#FF7A1A;">today.</td></tr>
+<tr><td style="padding:0 24px 26px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:23px;color:#8A8A8E;">Your order is out for delivery. Keep an eye on the door.</td></tr>
+<tr><td style="padding:0 24px 34px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#F5F0E8" style="background:#F5F0E8;"><a href="{% if fulfillment.tracking_urls.size > 0 %}{{ fulfillment.tracking_urls.first }}{% else %}{{ order_status_url }}{% endif %}" style="display:inline-block;padding:16px 34px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#0B0B0C;text-decoration:none;">Track my order &rarr;</a></td></tr></table>
+</td></tr>
+{% if fulfillment.tracking_numbers.size > 0 %}
+<tr><td style="padding:0 24px 10px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8A8E;">Tracking</td></tr>
+<tr><td style="padding:0 24px 30px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;line-height:21px;color:#F5F0E8;">{% if fulfillment.tracking_company %}{{ fulfillment.tracking_company }}<br>{% endif %}{% for number in fulfillment.tracking_numbers %}{% if fulfillment.tracking_urls[forloop.index0] %}<a href="{{ fulfillment.tracking_urls[forloop.index0] }}" style="color:#F5F0E8;text-decoration:underline;">{{ number }}</a>{% else %}{{ number }}{% endif %}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</td></tr>
+{% endif %}<tr><td style="padding:0 24px 10px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8A8E;">Items</td></tr>
+<tr><td style="padding:0 24px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #2A2A2D;">
+{% for line in fulfillment.fulfillment_line_items %}
+<tr>
+<td width="72" valign="top" style="padding:14px 14px 14px 0;border-bottom:1px solid #2A2A2D;">{% if line.line_item.image %}<img src="{{ line.line_item | img_url: 'compact_cropped' }}" width="60" alt="" style="display:block;width:60px;height:auto;">{% endif %}</td>
+<td valign="top" style="padding:14px 10px 14px 0;border-bottom:1px solid #2A2A2D;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;line-height:20px;color:#F5F0E8;"><span style="font-weight:600;text-transform:uppercase;">{{ line.line_item.product.title | default: line.line_item.title }}</span><br><span style="color:#8A8A8E;">{% if line.line_item.variant.title != 'Default Title' %}{{ line.line_item.variant.title }} &middot; {% endif %}Qty {{ line.quantity }}</span></td>
+
+</tr>
+{% endfor %}
+</table>
+</td></tr>
+<tr><td align="center" style="padding:40px 24px 10px;font-family:'Archivo Black','Arial Black',Arial,sans-serif;font-size:20px;line-height:22px;text-transform:uppercase;color:#F5F0E8;">Your aura.<br><span style="color:#D32F2F;">That's your power.</span></td></tr>
+<tr><td align="center" style="padding:0 24px 34px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;line-height:20px;color:#8A8A8E;">Questions? Reply to this email or write to <a href="mailto:{{ shop.email }}" style="color:#F5F0E8;">{{ shop.email }}</a><br><a href="{{ shop.url }}" style="color:#F5F0E8;">aurasim.be</a> &nbsp;&middot;&nbsp; <a href="https://www.instagram.com/aurasim.be/" style="color:#F5F0E8;">@aurasim.be</a></td></tr>
+<tr><td style="padding:0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td width="20%" height="6" style="background:#FFCC00;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#2F6FED;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#D32F2F;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#E8399C;font-size:0;line-height:0;">&nbsp;</td><td width="20%" height="6" style="background:#FF7A1A;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>
