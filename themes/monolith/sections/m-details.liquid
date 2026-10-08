@@ -1,0 +1,44 @@
+<section class="aura m-details" aria-labelledby="DetailsTitle-{{ section.id }}">
+  <div class="a-wrap">
+    <header class="m-section-head" data-reveal>
+      <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 id="DetailsTitle-{{ section.id }}">{{ section.settings.title }}</h2>
+    </header>
+    <div class="m-details__grid">
+      {%- for block in section.blocks -%}
+        <article class="m-detail" {{ block.shopify_attributes }} data-reveal data-reveal-delay="{{ forloop.index0 | modulo: 4 }}">
+          <div class="m-detail__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '360, 600, 900' }}
+            {%- endif -%}
+          </div>
+          <p class="m-detail__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
+          <h3 class="m-detail__title">{{ block.settings.title }}</h3>
+          <p class="a-muted m-detail__text">{{ block.settings.text }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A — Details",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "04 — Details" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Built in layers" }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Detail",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Front" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "A — Details" }]
+}
+{% endschema %}

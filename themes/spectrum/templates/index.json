@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "hero": {
+      "type": "s-hero",
+      "settings": {
+        "product": "aura-tee",
+        "meta_left": "AURASIM — Drop 01",
+        "meta_right": "Estd. 2024",
+        "line_1": "One tee.",
+        "line_2": "Five auras.",
+        "text": "Hover a color. Find your energy.",
+        "cta": "Shop the drop"
+      }
+    },
+    "ticker": {
+      "type": "s-ticker",
+      "settings": {
+        "text": "Energy shapes reality / Your aura. That's your power"
+      }
+    },
+    "chapters": {
+      "type": "s-chapters",
+      "settings": {
+        "product": "aura-tee",
+        "eyebrow": "The spectrum",
+        "title": "Five energies"
+      },
+      "blocks": {
+        "c0": {
+          "type": "chapter",
+          "settings": {
+            "color": "Yellow",
+            "line": "Bright. Loud. Impossible to ignore."
+          }
+        },
+        "c1": {
+          "type": "chapter",
+          "settings": {
+            "color": "Blue",
+            "line": "Cold focus. Calm power."
+          }
+        },
+        "c2": {
+          "type": "chapter",
+          "settings": {
+            "color": "Red",
+            "line": "Pure drive. The aura that started it all."
+          }
+        },
+        "c3": {
+          "type": "chapter",
+          "settings": {
+            "color": "Pink",
+            "line": "Soft on the outside. Electric inside."
+          }
+        },
+        "c4": {
+          "type": "chapter",
+          "settings": {
+            "color": "Orange",
+            "line": "Heat that never switches off."
+          }
+        }
+      },
+      "block_order": [
+        "c0",
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
+    },
+    "crew": {
+      "type": "s-crew",
+      "settings": {
+        "image": "shopify://shop_images/IMG_1611.jpg",
+        "eyebrow": "The crew",
+        "title": "Different auras.<br>Same energy.",
+        "cta": "Find yours",
+        "link": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "chapters",
+    "crew"
+  ]
+}

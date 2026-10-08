@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "m-product",
+      "settings": {
+        "eyebrow": "AURASIM — Drop 01",
+        "note": "Limited quantities. Once a color is gone, it's gone.",
+        "fit": "<p>Boxy, oversized cut with dropped shoulders and a cropped length — the fit you see on the crew.</p>",
+        "shipping": "<p>Shipping costs and delivery times are shown at checkout.</p>",
+        "others_title": "All five auras"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,61 @@
+{%- assign p = section.settings.product | default: all_products['aura-tee'] -%}
+<section class="aura m-hero" aria-labelledby="HeroTitle-{{ section.id }}">
+  <div class="m-hero__media">
+    {%- if section.settings.image != blank -%}
+      <picture>
+        {%- if section.settings.image_mobile != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ section.settings.image_mobile | image_url: width: 750 }} 750w, {{ section.settings.image_mobile | image_url: width: 1100 }} 1100w"
+            sizes="100vw"
+          >
+        {%- endif -%}
+        {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '900, 1400, 1800, 2400', class: 'm-hero__img' }}
+      </picture>
+    {%- endif -%}
+    <div class="m-hero__shade" aria-hidden="true"></div>
+  </div>
+
+  <div class="m-hero__frame" aria-hidden="true"></div>
+
+  <div class="m-hero__content">
+    <p class="a-eyebrow m-hero__eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+    <h1 id="HeroTitle-{{ section.id }}" class="m-hero__title" data-reveal data-reveal-delay="1">{{ section.settings.title }}</h1>
+    <p class="m-hero__tagline" data-reveal data-reveal-delay="2">{{ section.settings.tagline }}</p>
+
+    {%- if p != blank and p.options_by_name['Color'] -%}
+      <div class="m-hero__swatches" data-reveal data-reveal-delay="3" aria-hidden="true">
+        {%- for value in p.options_by_name['Color'].values -%}
+          {%- assign cname = value | append: '' -%}
+          <span style="background: {% render 'aura-hex', name: cname %}"></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="m-hero__ctas" data-reveal data-reveal-delay="4">
+      <a class="a-btn" href="{% if p != blank %}{{ p.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">{{ section.settings.cta }}</a>
+      <a class="a-btn a-btn--ghost" href="#pick">{{ section.settings.cta_secondary }}</a>
+    </div>
+  </div>
+
+  <p class="m-hero__corner m-hero__corner--l" aria-hidden="true">ESTD. 2024</p>
+  <p class="m-hero__corner m-hero__corner--r" aria-hidden="true">{{ section.settings.corner }}</p>
+</section>
+
+{% schema %}
+{
+  "name": "A — Hero",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Drop product" },
+    { "type": "image_picker", "id": "image", "label": "Image (desktop)" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Image (mobile)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AURASIM — Drop 01" },
+    { "type": "html", "id": "title", "label": "Title", "default": "One tee.<br>Five auras." },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Energy shapes reality." },
+    { "type": "text", "id": "cta", "label": "Button", "default": "Shop the drop" },
+    { "type": "text", "id": "cta_secondary", "label": "Secondary button", "default": "Pick your aura" },
+    { "type": "text", "id": "corner", "label": "Corner text", "default": "Drop 01 — 2026" }
+  ],
+  "presets": [{ "name": "A — Hero" }]
+}
+{% endschema %}

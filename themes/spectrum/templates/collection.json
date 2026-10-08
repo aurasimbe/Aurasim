@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "s-collection",
+      "settings": {
+        "eyebrow": "Shop — Drop 01"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

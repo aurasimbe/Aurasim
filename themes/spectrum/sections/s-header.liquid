@@ -1,0 +1,82 @@
+{%- render 'aura-head' -%}
+
+<div class="aura s-stripe" aria-hidden="true">
+  <span style="background: var(--a-yellow)"></span>
+  <span style="background: var(--a-blue)"></span>
+  <span style="background: var(--a-red)"></span>
+  <span style="background: var(--a-pink)"></span>
+  <span style="background: var(--a-orange)"></span>
+</div>
+
+{%- if section.settings.ticker != blank -%}
+  <div class="aura s-tickerbar" aria-label="{{ section.settings.ticker | escape }}">
+    <div class="s-tickerbar__track" aria-hidden="true">
+      {%- for i in (1..6) -%}
+        <span>{{ section.settings.ticker }}</span><span class="s-tickerbar__star">✦</span>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<header class="aura s-header">
+  <div class="s-header__inner">
+    <a class="s-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 320 | image_tag: alt: shop.name, style: 'height: 28px; width: auto' }}
+      {%- else -%}
+        AURASIM
+      {%- endif -%}
+    </a>
+
+    <nav class="s-header__nav" aria-label="Primary">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}><span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}"><span>01</span>Shop</a>
+        <a href="{{ routes.root_url }}#auras"><span>02</span>Auras</a>
+        <a href="/pages/about"><span>03</span>About</a>
+        <a href="/pages/faq"><span>04</span>FAQ</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="s-header__actions">
+      <a href="{{ routes.cart_url }}" class="s-header__cart{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-link>
+        Bag <span class="s-header__count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      <button
+        type="button"
+        class="s-header__burger"
+        data-menu-toggle
+        aria-controls="SMenu-{{ section.id }}"
+        aria-expanded="false"
+      >
+        Menu
+      </button>
+    </div>
+  </div>
+
+  <div class="s-menu" id="SMenu-{{ section.id }}">
+    <nav aria-label="Mobile">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"><span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}"><span>01</span>Shop</a>
+        <a href="{{ routes.root_url }}#auras"><span>02</span>Auras</a>
+        <a href="/pages/about"><span>03</span>About</a>
+        <a href="/pages/faq"><span>04</span>FAQ</a>
+      {%- endfor -%}
+    </nav>
+    <p class="s-menu__foot">Energy shapes reality ✦</p>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "AURASIM — Header (B)",
+  "settings": [
+    { "type": "text", "id": "ticker", "label": "Ticker text", "default": "Drop 01 — One tee, five auras — Limited quantities" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (optional)" },
+    { "type": "link_list", "id": "menu", "label": "Menu (empty = Shop / Auras / About / FAQ)" }
+  ]
+}
+{% endschema %}

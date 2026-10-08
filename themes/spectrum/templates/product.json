@@ -1,0 +1,75 @@
+{
+  "sections": {
+    "main": {
+      "type": "s-product",
+      "settings": {
+        "eyebrow": "Drop 01 — Aura series",
+        "price_note": "Shipping calculated at checkout.",
+        "note": "Limited quantities per color.",
+        "shipping": "<p>Shipping costs and delivery times are shown at checkout.</p>"
+      },
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "Base",
+            "value": "White tee"
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "Fit",
+            "value": "Boxy, oversized, cropped"
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "Front",
+            "value": "AS monogram + aura print"
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
+            "label": "Back",
+            "value": "Full aura graphic"
+          }
+        },
+        "s5": {
+          "type": "spec",
+          "settings": {
+            "label": "Sleeve",
+            "value": "Star mark + message"
+          }
+        },
+        "s6": {
+          "type": "spec",
+          "settings": {
+            "label": "Label",
+            "value": "Woven hem tab"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    "ticker": {
+      "type": "s-ticker",
+      "settings": {
+        "text": "Your aura. That's your power / Energy shapes reality"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ticker"
+  ]
+}

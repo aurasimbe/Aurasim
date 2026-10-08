@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "aura-cart",
+      "settings": {
+        "eyebrow": "AURASIM — Cart",
+        "title": "Your bag",
+        "empty_title": "Nothing here yet",
+        "empty_text": "Your aura is waiting. Pick a color.",
+        "note": "Shipping and taxes are calculated at checkout.",
+        "show_note": false,
+        "show_dynamic": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

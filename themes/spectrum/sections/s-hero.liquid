@@ -1,0 +1,83 @@
+{%- assign p = section.settings.product | default: all_products['aura-tee'] -%}
+{%- if p != blank and p.options_by_name['Color'] -%}
+  {%- assign ci = p.options_by_name['Color'].position | minus: 1 -%}
+  {%- assign first_color = p.options_by_name['Color'].values.first | append: '' -%}
+  <section
+    class="aura s-hero"
+    aria-labelledby="SHeroTitle-{{ section.id }}"
+    data-aura-switcher
+    style="--aura: {% render 'aura-hex', name: first_color %}"
+  >
+    <div class="a-wrap">
+      <div class="s-hero__meta" data-reveal>
+        <span>{{ section.settings.meta_left }}</span>
+        <span class="s-hero__meta-mid">{{ p.options_by_name['Color'].values.size }} auras — {{ p.price | money }}</span>
+        <span>{{ section.settings.meta_right }}</span>
+      </div>
+
+      <h1 id="SHeroTitle-{{ section.id }}" class="s-hero__title" data-reveal data-reveal-delay="1">
+        <span class="s-hero__line">{{ section.settings.line_1 }}</span>
+        <span class="s-hero__line s-hero__line--aura">{{ section.settings.line_2 }}</span>
+      </h1>
+    </div>
+
+    <div class="s-hero__panels" data-reveal data-reveal-delay="2">
+      {%- for value in p.options_by_name['Color'].values -%}
+        {%- assign cname = value | append: '' -%}
+        {%- capture hex %}{% render 'aura-hex', name: cname %}{% endcapture -%}
+        {%- liquid
+          assign vid = p.selected_or_first_available_variant.id
+          for v in p.variants
+            if v.options[ci] == cname
+              assign vid = v.id
+              break
+            endif
+          endfor
+          if forloop.index < 3
+            assign load = 'eager'
+          else
+            assign load = 'lazy'
+          endif
+        -%}
+        <a
+          class="s-panel{% if forloop.first %} is-active{% endif %}"
+          href="{{ p.url }}?variant={{ vid }}"
+          data-aura-switch="{{ cname }}"
+          data-aura-panel="{{ cname }}"
+          data-hex="{{ hex | strip }}"
+          style="--c: {{ hex | strip }}"
+        >
+          {%- render 'aura-color-media', product: p, color: cname, index: 0, width: 1100, sizes: '(min-width: 990px) 40vw, 72vw', loading: load, class: 's-panel__img' -%}
+          <span class="s-panel__shade" aria-hidden="true"></span>
+          <span class="s-panel__label">
+            <span class="s-panel__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="s-panel__sq"></span>
+            <span class="s-panel__name">{{ cname }}</span>
+            <span class="s-panel__go">Shop →</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    <div class="a-wrap s-hero__foot" data-reveal data-reveal-delay="3">
+      <p class="a-muted">{{ section.settings.text }}</p>
+      <a class="a-btn" href="{{ p.url }}">{{ section.settings.cta }}</a>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "B — Hero panels",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "meta_left", "label": "Meta left", "default": "AURASIM — Drop 01" },
+    { "type": "text", "id": "meta_right", "label": "Meta right", "default": "Estd. 2024" },
+    { "type": "text", "id": "line_1", "label": "Line 1", "default": "One tee." },
+    { "type": "text", "id": "line_2", "label": "Line 2 (aura colour)", "default": "Five auras." },
+    { "type": "text", "id": "text", "label": "Text", "default": "Hover a color. Find your energy." },
+    { "type": "text", "id": "cta", "label": "Button", "default": "Shop the drop" }
+  ],
+  "presets": [{ "name": "B — Hero panels" }]
+}
+{% endschema %}

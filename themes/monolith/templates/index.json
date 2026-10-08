@@ -1,0 +1,167 @@
+{
+  "sections": {
+    "hero": {
+      "type": "m-hero",
+      "settings": {
+        "product": "aura-tee",
+        "image": "shopify://shop_images/IMG_1611.jpg",
+        "image_mobile": "shopify://shop_images/IMG_1617.jpg",
+        "eyebrow": "AURASIM — Drop 01",
+        "title": "One tee.<br>Five auras.",
+        "tagline": "Energy shapes reality.",
+        "cta": "Shop the drop",
+        "cta_secondary": "Pick your aura",
+        "corner": "Drop 01 — 2026"
+      }
+    },
+    "pick": {
+      "type": "m-pick",
+      "settings": {
+        "product": "aura-tee",
+        "eyebrow": "01 — The drop",
+        "title": "Pick your aura",
+        "text": "Same white boxy tee. Same AS monogram. Five different energies wrapped around it. Choose the one that's yours."
+      }
+    },
+    "manifesto": {
+      "type": "m-manifesto",
+      "settings": {
+        "image": "shopify://shop_images/IMG_1613.jpg",
+        "eyebrow": "02 — Manifesto",
+        "title": "Your aura.<br>That's your power.",
+        "lines": "You can't see it.\nBut you can feel it.\nThat's your aura.\nThat's your power."
+      }
+    },
+    "lookbook": {
+      "type": "m-lookbook",
+      "settings": {
+        "eyebrow": "03 — Lookbook",
+        "title": "Worn by the crew"
+      },
+      "blocks": {
+        "look0": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0852.jpg",
+            "caption": "Blue",
+            "color": "Blue",
+            "size": "normal",
+            "link": "/products/aura-tee"
+          }
+        },
+        "look1": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1619.jpg",
+            "caption": "Red",
+            "color": "Red",
+            "size": "normal",
+            "link": "/products/aura-tee"
+          }
+        },
+        "look2": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0847.jpg",
+            "caption": "Yellow",
+            "color": "Yellow",
+            "size": "normal",
+            "link": "/products/aura-tee"
+          }
+        },
+        "look3": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0853.jpg",
+            "caption": "Pink",
+            "color": "Pink",
+            "size": "normal",
+            "link": "/products/aura-tee"
+          }
+        },
+        "look4": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1602.jpg",
+            "caption": "Orange",
+            "color": "Orange",
+            "size": "normal",
+            "link": "/products/aura-tee"
+          }
+        },
+        "look5": {
+          "type": "look",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0846.jpg",
+            "caption": "Yellow",
+            "color": "Yellow",
+            "size": "normal",
+            "link": "/products/aura-tee"
+          }
+        }
+      },
+      "block_order": [
+        "look0",
+        "look1",
+        "look2",
+        "look3",
+        "look4",
+        "look5"
+      ]
+    },
+    "details": {
+      "type": "m-details",
+      "settings": {
+        "eyebrow": "04 — Details",
+        "title": "Built in layers"
+      },
+      "blocks": {
+        "d1": {
+          "type": "detail",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0848.jpg",
+            "title": "Front",
+            "text": "The AS monogram wrapped in its aura. AURASIM — Energy Shapes Reality — Estd. 2024."
+          }
+        },
+        "d2": {
+          "type": "detail",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0844.jpg",
+            "title": "Back",
+            "text": "A full-size aura graphic and the line that says it all: Your aura. That's your power."
+          }
+        },
+        "d3": {
+          "type": "detail",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1598.jpg",
+            "title": "Sleeve",
+            "text": "Star mark and a second hit of the message on the sleeve."
+          }
+        },
+        "d4": {
+          "type": "detail",
+          "settings": {
+            "image": "shopify://shop_images/IMG_0843.jpg",
+            "title": "Label",
+            "text": "Woven tab at the hem. Small detail, same energy."
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "pick",
+    "manifesto",
+    "lookbook",
+    "details"
+  ]
+}

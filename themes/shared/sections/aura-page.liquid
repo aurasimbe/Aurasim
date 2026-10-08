@@ -1,0 +1,20 @@
+<section class="aura a-page" aria-labelledby="PageTitle-{{ section.id }}">
+  <div class="a-wrap">
+    <header class="a-page__head" data-reveal>
+      <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 id="PageTitle-{{ section.id }}">{{ page.title }}</h1>
+    </header>
+    <div class="a-page__body a-rte" data-reveal data-reveal-delay="1">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "AURASIM — Page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AURASIM" }
+  ]
+}
+{% endschema %}

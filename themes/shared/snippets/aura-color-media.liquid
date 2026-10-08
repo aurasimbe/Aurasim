@@ -1,0 +1,36 @@
+{%- comment -%}
+  Finds the first image of a product whose alt text contains a colour name.
+  Outputs an <img> tag. Usage:
+  {% render 'aura-color-media', product: p, color: 'Red', index: 0, width: 900, sizes: '50vw', class: 'x', loading: 'lazy' %}
+  index: 0 = first match (front), 1 = second match (back), etc.
+{%- endcomment -%}
+{%- liquid
+  assign wanted = index | default: 0
+  assign found = 0
+  assign img = blank
+  for m in product.media
+    if m.media_type == 'image' and m.alt contains color
+      if found == wanted
+        assign img = m
+        break
+      endif
+      assign found = found | plus: 1
+    endif
+  endfor
+  if img == blank
+    for m in product.media
+      if m.media_type == 'image' and m.alt contains color
+        assign img = m
+        break
+      endif
+    endfor
+  endif
+  if img == blank
+    assign img = product.featured_media
+  endif
+  assign w = width | default: 900
+  assign l = loading | default: 'lazy'
+-%}
+{%- if img != blank -%}
+  {{ img | image_url: width: w | image_tag: loading: l, sizes: sizes, widths: '360, 540, 720, 900, 1200, 1600', class: class, alt: img.alt }}
+{%- endif -%}

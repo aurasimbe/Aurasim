@@ -1,0 +1,35 @@
+<section class="aura m-manifesto" aria-labelledby="ManifestoTitle-{{ section.id }}">
+  <div class="a-wrap m-manifesto__grid">
+    <div class="m-manifesto__media" data-reveal>
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 46vw, 100vw', widths: '600, 900, 1200, 1400' }}
+      {%- endif -%}
+    </div>
+    <div class="m-manifesto__text">
+      <p class="a-eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h2 id="ManifestoTitle-{{ section.id }}" class="m-manifesto__title" data-reveal data-reveal-delay="1">{{ section.settings.title }}</h2>
+      <div class="m-manifesto__lines" data-reveal data-reveal-delay="2">
+        {%- assign lines = section.settings.lines | newline_to_br | split: '<br />' -%}
+        {%- for line in lines -%}
+          <p>{{ line | strip }}</p>
+        {%- endfor -%}
+      </div>
+      <div class="m-manifesto__mark" aria-hidden="true" data-reveal data-reveal-delay="3">
+        <span></span><span class="m-manifesto__star">✦</span><span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A — Manifesto",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "02 — Manifesto" },
+    { "type": "html", "id": "title", "label": "Title", "default": "Your aura.<br>That's your power." },
+    { "type": "textarea", "id": "lines", "label": "Lines (one per line)", "default": "You can't see it.\nBut you can feel it.\nThat's your aura.\nThat's your power." }
+  ],
+  "presets": [{ "name": "A — Manifesto" }]
+}
+{% endschema %}

@@ -1,0 +1,213 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign color_option = product.options_by_name['Color']
+  if color_option == blank
+    assign color_option = product.options_by_name['Couleur']
+  endif
+  assign size_option = product.options_by_name['Size']
+  if size_option == blank
+    assign size_option = product.options_by_name['Taille']
+  endif
+  assign current_color = ''
+  if color_option
+    assign ci = color_option.position | minus: 1
+    assign current_color = current.options[ci]
+    assign color_names = ''
+    for value in color_option.values
+      assign cname = value | append: ''
+      assign color_names = color_names | append: cname | append: '|'
+    endfor
+    assign color_list = color_names | split: '|'
+  endif
+  if size_option
+    assign si = size_option.position | minus: 1
+    assign current_size = current.options[si]
+  endif
+-%}
+{%- capture current_hex %}{% render 'aura-hex', name: current_color %}{% endcapture -%}
+
+<section class="aura m-product" data-aura-product style="--aura: {{ current_hex | strip }}">
+  {%- render 'aura-product-data', product: product -%}
+
+  <div class="a-wrap m-product__grid">
+    <div class="m-product__galleries">
+      {%- if color_option -%}
+        {%- for cname in color_list -%}
+          <div class="m-gallery{% if cname == current_color %} is-active{% endif %}" data-gallery-color="{{ cname }}">
+            {%- assign n = 0 -%}
+            {%- for m in product.media -%}
+              {%- if m.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+              {%- liquid
+                assign belongs = false
+                if m.alt contains cname
+                  assign belongs = true
+                else
+                  assign tagged = false
+                  for other in color_list
+                    if m.alt contains other
+                      assign tagged = true
+                      break
+                    endif
+                  endfor
+                  unless tagged
+                    assign belongs = true
+                  endunless
+                endif
+              -%}
+              {%- if belongs -%}
+                {%- assign n = n | plus: 1 -%}
+                <figure class="m-gallery__item{% if n == 1 %} m-gallery__item--lead{% endif %}">
+                  {%- if n == 1 and cname == current_color -%}
+                    {{ m | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 990px) 58vw, 88vw', widths: '540, 720, 900, 1200, 1600' }}
+                  {%- else -%}
+                    {{ m | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 29vw, 88vw', widths: '540, 720, 900, 1200' }}
+                  {%- endif -%}
+                </figure>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="m-gallery is-active">
+          {%- for m in product.media -%}
+            {%- if m.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+            <figure class="m-gallery__item{% if forloop.first %} m-gallery__item--lead{% endif %}">
+              {{ m | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 58vw, 88vw', widths: '540, 720, 900, 1200, 1600' }}
+            </figure>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="m-product__info">
+      <div class="m-product__sticky">
+        <nav class="m-product__crumbs" aria-label="Breadcrumb">
+          <a href="{{ routes.all_products_collection_url }}">Shop</a> / <span>{{ product.title }}</span>
+        </nav>
+        <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+        <h1 class="m-product__title">{{ product.title }}</h1>
+        <p class="m-product__price" data-price>{{ current.price | money }}</p>
+
+        <form action="{{ routes.cart_add_url }}" method="post" class="m-product__form" data-product-form>
+          <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+
+          {%- if color_option -%}
+            <div class="m-product__opt">
+              <p class="m-product__opt-label">Aura — <span data-color-label>{{ current_color }}</span></p>
+              <div class="a-swatches" role="radiogroup" aria-label="{{ color_option.name }}">
+                {%- for cname in color_list -%}
+                  {%- capture hex %}{% render 'aura-hex', name: cname %}{% endcapture -%}
+                  <button
+                    type="button"
+                    role="radio"
+                    class="a-swatch{% if cname == current_color %} is-active{% endif %}"
+                    data-option-color="{{ cname }}"
+                    data-hex="{{ hex | strip }}"
+                    aria-checked="{% if cname == current_color %}true{% else %}false{% endif %}"
+                  >
+                    <span class="a-swatch__sq" style="background: {{ hex | strip }}"></span>
+                    {{ cname }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if size_option -%}
+            <div class="m-product__opt">
+              <p class="m-product__opt-label">Size</p>
+              <div class="a-sizes" role="radiogroup" aria-label="{{ size_option.name }}">
+                {%- for value in size_option.values -%}
+                  {%- assign sname = value | append: '' -%}
+                  <button
+                    type="button"
+                    role="radio"
+                    class="a-size{% if sname == current_size %} is-active{% endif %}"
+                    data-option-size="{{ sname }}"
+                    aria-checked="{% if sname == current_size %}true{% else %}false{% endif %}"
+                  >
+                    {{ sname }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <button type="submit" class="a-btn a-btn--block m-product__add" data-add {% unless current.available %}disabled{% endunless %}>
+            <span data-add-label>{% if current.available %}Add to cart{% else %}Sold out{% endif %}</span>
+          </button>
+        </form>
+
+        <p class="m-product__note">{{ section.settings.note }}</p>
+
+        <div class="a-acc m-product__acc">
+          <details open>
+            <summary>Details</summary>
+            <div class="a-acc__body">{{ product.description }}</div>
+          </details>
+          {%- if section.settings.fit != blank -%}
+            <details>
+              <summary>Fit</summary>
+              <div class="a-acc__body">{{ section.settings.fit }}</div>
+            </details>
+          {%- endif -%}
+          <details>
+            <summary>Shipping &amp; returns</summary>
+            <div class="a-acc__body">
+              {{ section.settings.shipping }}
+              {%- if shop.shipping_policy or shop.refund_policy -%}
+                <p>
+                  {%- if shop.shipping_policy -%}<a href="{{ shop.shipping_policy.url }}">{{ shop.shipping_policy.title }}</a>{%- endif -%}
+                  {%- if shop.shipping_policy and shop.refund_policy %} · {% endif -%}
+                  {%- if shop.refund_policy -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+                </p>
+              {%- endif -%}
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- if color_option -%}
+    <div class="a-wrap m-product__others">
+      <p class="a-eyebrow" data-reveal>{{ section.settings.others_title }}</p>
+      <div class="m-others">
+        {%- for cname in color_list -%}
+          {%- liquid
+            assign vid = current.id
+            for v in product.variants
+              if v.options[ci] == cname
+                assign vid = v.id
+                break
+              endif
+            endfor
+          -%}
+          <a class="a-card m-others__card" href="{{ product.url }}?variant={{ vid }}" data-reveal data-reveal-delay="{{ forloop.index0 | modulo: 5 }}">
+            <div class="a-card__media">
+              {%- render 'aura-color-media', product: product, color: cname, index: 0, width: 600, sizes: '(min-width: 990px) 18vw, 40vw' -%}
+              {%- render 'aura-color-media', product: product, color: cname, index: 1, width: 600, sizes: '(min-width: 990px) 18vw, 40vw' -%}
+            </div>
+            <div class="a-card__info">
+              <span class="a-card__title"><span class="a-card__dot" style="background: {% render 'aura-hex', name: cname %}"></span>{{ cname }}</span>
+              <span class="a-card__price">{{ product.price | money }}</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "A — Product",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AURASIM — Drop 01" },
+    { "type": "text", "id": "note", "label": "Note under button", "default": "Limited quantities. Once a color is gone, it's gone." },
+    { "type": "richtext", "id": "fit", "label": "Fit", "default": "<p>Boxy, oversized cut with dropped shoulders and a cropped length — the fit you see on the crew.</p>" },
+    { "type": "richtext", "id": "shipping", "label": "Shipping & returns", "default": "<p>Shipping costs and delivery times are shown at checkout.</p>" },
+    { "type": "text", "id": "others_title", "label": "Other colours title", "default": "All five auras" }
+  ]
+}
+{% endschema %}

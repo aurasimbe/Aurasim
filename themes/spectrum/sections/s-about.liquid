@@ -1,0 +1,77 @@
+<section class="aura s-about" aria-labelledby="SAboutTitle-{{ section.id }}">
+  <div class="a-wrap s-about__grid">
+    <div class="s-about__left">
+      <div class="s-about__sticky">
+        <p class="a-eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+        <h1 id="SAboutTitle-{{ section.id }}" class="s-about__title" data-reveal data-reveal-delay="1">{{ section.settings.title }}</h1>
+        <div class="s-about__bars" aria-hidden="true" data-reveal data-reveal-delay="2">
+          <span style="background: var(--a-yellow)"></span>
+          <span style="background: var(--a-blue)"></span>
+          <span style="background: var(--a-red)"></span>
+          <span style="background: var(--a-pink)"></span>
+          <span style="background: var(--a-orange)"></span>
+        </div>
+      </div>
+    </div>
+    <div class="s-about__right">
+      {%- if section.settings.image != blank -%}
+        <div class="s-about__img" data-reveal>
+          {{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 55vw, 100vw', widths: '600, 900, 1200, 1800' }}
+        </div>
+      {%- endif -%}
+      <div class="a-rte s-about__story" data-reveal>{{ page.content }}</div>
+
+      <ol class="s-about__list">
+        {%- for block in section.blocks -%}
+          <li class="s-about__item" style="--c: {% render 'aura-hex', name: block.settings.color %}" {{ block.shopify_attributes }} data-reveal>
+            <span class="s-about__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <div>
+              <h2 class="s-about__item-title">{{ block.settings.title }}</h2>
+              <p class="a-muted">{{ block.settings.text }}</p>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {%- if section.settings.image_2 != blank -%}
+        <div class="s-about__img s-about__img--2" data-reveal>
+          {{ section.settings.image_2 | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 40vw, 100vw', widths: '600, 900, 1400' }}
+        </div>
+      {%- endif -%}
+
+      <div class="s-about__cta" data-reveal>
+        <a class="a-btn" href="{{ routes.all_products_collection_url }}">Shop the drop</a>
+        {%- if section.settings.instagram != blank -%}
+          <a class="a-btn a-btn--ghost" href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram ↗</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — About",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About AURASIM" },
+    { "type": "html", "id": "title", "label": "Title", "default": "Energy<br>shapes<br>reality." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "image_picker", "id": "image_2", "label": "Second image" },
+    { "type": "url", "id": "instagram", "label": "Instagram" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Point",
+      "settings": [
+        { "type": "select", "id": "color", "label": "Aura", "default": "Red", "options": [
+          { "value": "Yellow", "label": "Yellow" }, { "value": "Blue", "label": "Blue" }, { "value": "Red", "label": "Red" },
+          { "value": "Pink", "label": "Pink" }, { "value": "Orange", "label": "Orange" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ]
+}
+{% endschema %}

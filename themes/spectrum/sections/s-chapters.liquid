@@ -1,0 +1,69 @@
+{%- assign p = section.settings.product | default: all_products['aura-tee'] -%}
+<section class="aura s-chapters" id="auras" aria-labelledby="SChaptersTitle-{{ section.id }}">
+  <div class="a-wrap">
+    <header class="s-chapters__head" data-reveal>
+      <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 id="SChaptersTitle-{{ section.id }}">{{ section.settings.title }}</h2>
+    </header>
+  </div>
+
+  {%- if p != blank and p.options_by_name['Color'] -%}
+    {%- assign ci = p.options_by_name['Color'].position | minus: 1 -%}
+    {%- for block in section.blocks -%}
+      {%- assign cname = block.settings.color -%}
+      {%- capture hex %}{% render 'aura-hex', name: cname %}{% endcapture -%}
+      {%- liquid
+        assign vid = p.selected_or_first_available_variant.id
+        for v in p.variants
+          if v.options[ci] == cname
+            assign vid = v.id
+            break
+          endif
+        endfor
+      -%}
+      <article class="s-chapter{% cycle '', ' s-chapter--flip' %}" style="--c: {{ hex | strip }}" {{ block.shopify_attributes }}>
+        <div class="a-wrap s-chapter__grid">
+          <div class="s-chapter__text" data-reveal>
+            <p class="s-chapter__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ section.blocks.size | prepend: '0' | slice: -2, 2 }}</p>
+            <h3 class="s-chapter__name">{{ cname }}</h3>
+            <p class="s-chapter__line">{{ block.settings.line }}</p>
+            <div class="s-chapter__ctas">
+              <a class="a-btn s-chapter__btn" href="{{ p.url }}?variant={{ vid }}">Get {{ cname }} — {{ p.price | money }}</a>
+            </div>
+          </div>
+          <a class="s-chapter__front" href="{{ p.url }}?variant={{ vid }}" data-reveal data-reveal-delay="1" aria-label="{{ p.title }} — {{ cname }}">
+            {%- render 'aura-color-media', product: p, color: cname, index: 0, width: 1200, sizes: '(min-width: 990px) 34vw, 70vw' -%}
+          </a>
+          <div class="s-chapter__back" data-reveal data-reveal-delay="2">
+            {%- render 'aura-color-media', product: p, color: cname, index: 1, width: 900, sizes: '(min-width: 990px) 22vw, 46vw' -%}
+          </div>
+        </div>
+      </article>
+    {%- endfor -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "B — Aura chapters",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The spectrum" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Five energies" }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "settings": [
+        { "type": "select", "id": "color", "label": "Aura (must match the colour name)", "default": "Red", "options": [
+          { "value": "Yellow", "label": "Yellow" }, { "value": "Blue", "label": "Blue" }, { "value": "Red", "label": "Red" },
+          { "value": "Pink", "label": "Pink" }, { "value": "Orange", "label": "Orange" }
+        ] },
+        { "type": "text", "id": "line", "label": "Line" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "B — Aura chapters" }]
+}
+{% endschema %}

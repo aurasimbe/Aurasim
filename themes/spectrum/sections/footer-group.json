@@ -1,0 +1,19 @@
+{
+  "type": "footer",
+  "name": "t:names.footer",
+  "sections": {
+    "aura_footer": {
+      "type": "s-footer",
+      "settings": {
+        "signup_eyebrow": "Stay in the loop",
+        "signup_title": "Get the signal first.",
+        "product": "aura-tee",
+        "instagram": "https://www.instagram.com/aurasim.be/",
+        "tagline": "Energy shapes reality. Estd. 2024."
+      }
+    }
+  },
+  "order": [
+    "aura_footer"
+  ]
+}

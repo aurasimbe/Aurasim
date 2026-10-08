@@ -1,0 +1,15 @@
+{
+  "type": "header",
+  "name": "t:names.header",
+  "sections": {
+    "aura_header": {
+      "type": "s-header",
+      "settings": {
+        "ticker": "Drop 01 — One tee, five auras — Limited quantities"
+      }
+    }
+  },
+  "order": [
+    "aura_header"
+  ]
+}

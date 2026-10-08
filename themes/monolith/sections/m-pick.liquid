@@ -1,0 +1,84 @@
+{%- assign p = section.settings.product | default: all_products['aura-tee'] -%}
+{%- if p != blank and p.options_by_name['Color'] -%}
+  {%- assign ci = p.options_by_name['Color'].position | minus: 1 -%}
+  {%- assign first_color = p.options_by_name['Color'].values.first | append: '' -%}
+  <section
+    class="aura m-pick"
+    id="pick"
+    aria-labelledby="PickTitle-{{ section.id }}"
+    data-aura-switcher
+    style="--aura: {% render 'aura-hex', name: first_color %}"
+  >
+    <div class="a-wrap m-pick__grid">
+      <div class="m-pick__stage" data-reveal>
+        {%- for value in p.options_by_name['Color'].values -%}
+          {%- assign cname = value | append: '' -%}
+          <div class="m-pick__panel{% if forloop.first %} is-active{% endif %}" data-aura-panel="{{ cname }}">
+            <div class="m-pick__front">
+              {%- render 'aura-color-media', product: p, color: cname, index: 0, width: 1200, sizes: '(min-width: 990px) 34vw, 62vw' -%}
+            </div>
+            <div class="m-pick__back">
+              {%- render 'aura-color-media', product: p, color: cname, index: 1, width: 900, sizes: '(min-width: 990px) 20vw, 36vw' -%}
+            </div>
+          </div>
+        {%- endfor -%}
+        <div class="m-pick__frame" aria-hidden="true"></div>
+      </div>
+
+      <div class="m-pick__info">
+        <p class="a-eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+        <h2 id="PickTitle-{{ section.id }}" class="m-pick__title" data-reveal data-reveal-delay="1">{{ section.settings.title }}</h2>
+        <p class="a-muted m-pick__text" data-reveal data-reveal-delay="2">{{ section.settings.text }}</p>
+
+        <div class="a-swatches m-pick__swatches" role="group" aria-label="Colors" data-reveal data-reveal-delay="3">
+          {%- for value in p.options_by_name['Color'].values -%}
+            {%- assign cname = value | append: '' -%}
+            {%- capture hex %}{% render 'aura-hex', name: cname %}{% endcapture -%}
+            <button
+              type="button"
+              class="a-swatch{% if forloop.first %} is-active{% endif %}"
+              data-aura-switch="{{ cname }}"
+              data-hex="{{ hex | strip }}"
+              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+            >
+              <span class="a-swatch__sq" style="background: {{ hex | strip }}"></span>
+              {{ cname }}
+            </button>
+          {%- endfor -%}
+        </div>
+
+        <div class="m-pick__ctas" data-reveal data-reveal-delay="4">
+          {%- for value in p.options_by_name['Color'].values -%}
+            {%- assign cname = value | append: '' -%}
+            {%- liquid
+              assign vid = p.selected_or_first_available_variant.id
+              for v in p.variants
+                if v.options[ci] == cname
+                  assign vid = v.id
+                  break
+                endif
+              endfor
+            -%}
+            <div class="m-pick__cta{% if forloop.first %} is-active{% endif %}" data-aura-panel="{{ cname }}">
+              <p class="m-pick__name"><span class="m-pick__name-sq"></span>{{ cname }}</p>
+              <a class="a-btn" href="{{ p.url }}?variant={{ vid }}">Shop {{ cname }} — {{ p.price | money }}</a>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "A — Pick your aura",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "01 — The drop" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Pick your aura" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Same white boxy tee. Same AS monogram. Five different energies wrapped around it. Choose the one that's yours." }
+  ],
+  "presets": [{ "name": "A — Pick your aura" }]
+}
+{% endschema %}

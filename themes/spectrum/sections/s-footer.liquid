@@ -1,0 +1,96 @@
+{%- assign p = section.settings.product | default: all_products['aura-tee'] -%}
+<footer class="aura s-footer">
+  <div class="s-footer__signup">
+    <div class="a-wrap s-footer__signup-inner">
+      <div data-reveal>
+        <p class="a-eyebrow">{{ section.settings.signup_eyebrow }}</p>
+        <h2 class="s-footer__title">{{ section.settings.signup_title }}</h2>
+      </div>
+      <div data-reveal data-reveal-delay="1">
+        <form method="post" action="{{ routes.root_url }}contact#SFooterSignup" id="SFooterSignup" class="a-signup" accept-charset="UTF-8" data-aura-newsletter>
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[tags]" value="newsletter,footer-signup">
+          <label for="SFooterSignupEmail" class="a-visually-hidden">Email</label>
+          <input id="SFooterSignupEmail" class="a-field" type="email" name="contact[email]" placeholder="your@email.com" autocomplete="email" required>
+          <button type="submit" class="a-btn">Notify me</button>
+        </form>
+        <p class="a-signup-success" data-newsletter-success hidden role="status">Got it, we'll let you know.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="a-wrap s-footer__grid">
+    <div class="s-footer__brand">
+      <p class="s-footer__logo">AURASIM</p>
+      <p class="a-muted">{{ section.settings.tagline }}</p>
+    </div>
+    <div>
+      <p class="s-footer__label">Shop</p>
+      <ul>
+        <li><a href="{{ routes.all_products_collection_url }}">All</a></li>
+        {%- if p != blank and p.options_by_name['Color'] -%}
+          {%- assign ci = p.options_by_name['Color'].position | minus: 1 -%}
+          {%- for value in p.options_by_name['Color'].values -%}
+            {%- assign cname = value | append: '' -%}
+            {%- liquid
+              assign vid = p.selected_or_first_available_variant.id
+              for v in p.variants
+                if v.options[ci] == cname
+                  assign vid = v.id
+                  break
+                endif
+              endfor
+            -%}
+            <li><a href="{{ p.url }}?variant={{ vid }}" class="s-footer__color" style="--c: {% render 'aura-hex', name: cname %}">{{ cname }}</a></li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+    <div>
+      <p class="s-footer__label">Help</p>
+      <ul>
+        <li><a href="/pages/faq">FAQ</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+        {%- for policy in shop.policies -%}
+          <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+    <div>
+      <p class="s-footer__label">Brand</p>
+      <ul>
+        <li><a href="/pages/about">About</a></li>
+        {%- if section.settings.instagram != blank -%}
+          <li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram ↗</a></li>
+        {%- endif -%}
+        {%- if section.settings.tiktok != blank -%}
+          <li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok ↗</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+
+  <div class="a-wrap s-footer__bottom">
+    <p>© {{ 'now' | date: '%Y' }} {{ shop.name }}</p>
+    <div class="s-footer__pay">
+      {%- for type in shop.enabled_payment_types -%}
+        {{ type | payment_type_svg_tag: class: 's-footer__pay-icon' }}
+      {%- endfor -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "AURASIM — Footer (B)",
+  "settings": [
+    { "type": "text", "id": "signup_eyebrow", "label": "Signup eyebrow", "default": "Stay in the loop" },
+    { "type": "text", "id": "signup_title", "label": "Signup title", "default": "Get the signal first." },
+    { "type": "product", "id": "product", "label": "Product for colour links" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "tiktok", "label": "TikTok" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Energy shapes reality. Estd. 2024." }
+  ]
+}
+{% endschema %}

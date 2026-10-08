@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "aura-page",
+      "settings": {
+        "eyebrow": "AURASIM"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

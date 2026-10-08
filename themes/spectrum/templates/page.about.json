@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "main": {
+      "type": "s-about",
+      "settings": {
+        "eyebrow": "About AURASIM",
+        "title": "Energy<br>shapes<br>reality.",
+        "image": "shopify://shop_images/IMG_1611.jpg",
+        "image_2": "shopify://shop_images/IMG_1599.jpg",
+        "instagram": "https://www.instagram.com/aurasim.be/"
+      },
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "color": "Red",
+            "title": "Aura",
+            "text": "Everyone carries an energy you can't see but can always feel. Our pieces are built to make it visible."
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "color": "Blue",
+            "title": "Drops",
+            "text": "We release in drops: one design at a time, in limited quantities."
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "color": "Yellow",
+            "title": "Crew",
+            "text": "Made for the ones who move together. Wear your aura, find your people."
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,27 @@
+<section class="aura s-crew" aria-labelledby="SCrewTitle-{{ section.id }}">
+  <div class="s-crew__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '900, 1400, 1800, 2400' }}
+    {%- endif -%}
+  </div>
+  <div class="s-crew__frame" aria-hidden="true"></div>
+  <div class="s-crew__text">
+    <p class="a-eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+    <h2 id="SCrewTitle-{{ section.id }}" data-reveal data-reveal-delay="1">{{ section.settings.title }}</h2>
+    <a class="a-btn" href="{{ section.settings.link | default: routes.all_products_collection_url }}" data-reveal data-reveal-delay="2">{{ section.settings.cta }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — Crew image",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The crew" },
+    { "type": "html", "id": "title", "label": "Title", "default": "Different auras.<br>Same energy." },
+    { "type": "text", "id": "cta", "label": "Button", "default": "Find yours" },
+    { "type": "url", "id": "link", "label": "Link" }
+  ],
+  "presets": [{ "name": "B — Crew image" }]
+}
+{% endschema %}

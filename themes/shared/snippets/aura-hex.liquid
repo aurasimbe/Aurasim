@@ -1,0 +1,21 @@
+{%- comment -%}
+  Outputs the brand hex for an aura colour name.
+  Usage: {% render 'aura-hex', name: 'Yellow' %}
+{%- endcomment -%}
+{%- liquid
+  assign n = name | downcase | strip
+  case n
+    when 'yellow', 'jaune'
+      echo '#FFCC00'
+    when 'blue', 'bleu'
+      echo '#2F6FED'
+    when 'red', 'rouge'
+      echo '#D32F2F'
+    when 'pink', 'rose'
+      echo '#E8399C'
+    when 'orange'
+      echo '#FF7A1A'
+    else
+      echo '#F5F0E8'
+  endcase
+-%}

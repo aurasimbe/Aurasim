@@ -1,0 +1,9 @@
+{%- comment -%}
+  Fonts, brand stylesheets and behaviour. Rendered once from the header section.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+{{ 'aura-base.css' | asset_url | stylesheet_tag }}
+{{ 'aura-theme.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'aura.js' | asset_url }}" defer></script>

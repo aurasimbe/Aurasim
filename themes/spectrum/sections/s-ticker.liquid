@@ -1,0 +1,21 @@
+<section class="aura s-ticker" aria-label="{{ section.settings.text | escape }}">
+  <div class="s-ticker__track" aria-hidden="true">
+    {%- for i in (1..4) -%}
+      {%- assign parts = section.settings.text | split: '/' -%}
+      {%- for part in parts -%}
+        <span class="s-ticker__word{% cycle '', ' s-ticker__word--outline' %}">{{ part | strip }}</span>
+        <span class="s-ticker__star" style="color: {% cycle 'var(--a-yellow)', 'var(--a-blue)', 'var(--a-red)', 'var(--a-pink)', 'var(--a-orange)' %}">✦</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — Ticker",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text (separate with /)", "default": "Energy shapes reality / Your aura. That's your power" }
+  ],
+  "presets": [{ "name": "B — Ticker" }]
+}
+{% endschema %}

@@ -1,0 +1,73 @@
+{%- comment -%}
+  Products with a Color option are expanded into one card per colour.
+{%- endcomment -%}
+<section class="aura m-collection" aria-labelledby="CollectionTitle-{{ section.id }}">
+  <div class="a-wrap">
+    <header class="m-collection__head" data-reveal>
+      <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 id="CollectionTitle-{{ section.id }}">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="a-muted m-collection__desc">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- paginate collection.products by 24 -%}
+      <div class="m-collection__grid">
+        {%- for p in collection.products -%}
+          {%- assign copt = p.options_by_name['Color'] -%}
+          {%- if copt -%}
+            {%- assign ci = copt.position | minus: 1 -%}
+            {%- for value in copt.values -%}
+              {%- assign cname = value | append: '' -%}
+              {%- liquid
+                assign vid = p.selected_or_first_available_variant.id
+                for v in p.variants
+                  if v.options[ci] == cname
+                    assign vid = v.id
+                    break
+                  endif
+                endfor
+              -%}
+              <a class="a-card" href="{{ p.url }}?variant={{ vid }}" data-reveal data-reveal-delay="{{ forloop.index0 | modulo: 3 }}">
+                <div class="a-card__media">
+                  {%- render 'aura-color-media', product: p, color: cname, index: 0, width: 900, sizes: '(min-width: 990px) 30vw, 50vw' -%}
+                  {%- render 'aura-color-media', product: p, color: cname, index: 1, width: 900, sizes: '(min-width: 990px) 30vw, 50vw' -%}
+                </div>
+                <div class="a-card__info">
+                  <span class="a-card__title"><span class="a-card__dot" style="background: {% render 'aura-hex', name: cname %}"></span>{{ p.title }} — {{ cname }}</span>
+                  <span class="a-card__price">{{ p.price | money }}</span>
+                </div>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            <a class="a-card" href="{{ p.url }}" data-reveal>
+              <div class="a-card__media">
+                {%- if p.featured_media -%}
+                  {{ p.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 30vw, 50vw', widths: '360, 540, 720, 900' }}
+                {%- endif -%}
+              </div>
+              <div class="a-card__info">
+                <span class="a-card__title">{{ p.title }}</span>
+                <span class="a-card__price">{{ p.price | money }}</span>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- else -%}
+          <p class="a-muted">Nothing here yet. The drop is coming.</p>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="m-collection__pages" aria-label="Pagination">{{ paginate | default_pagination }}</nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A — Collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AURASIM — Shop" }
+  ]
+}
+{% endschema %}

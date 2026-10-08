@@ -1,0 +1,201 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign color_option = product.options_by_name['Color']
+  if color_option == blank
+    assign color_option = product.options_by_name['Couleur']
+  endif
+  assign size_option = product.options_by_name['Size']
+  if size_option == blank
+    assign size_option = product.options_by_name['Taille']
+  endif
+  assign current_color = ''
+  if color_option
+    assign ci = color_option.position | minus: 1
+    assign current_color = current.options[ci]
+    assign color_names = ''
+    for value in color_option.values
+      assign cname = value | append: ''
+      assign color_names = color_names | append: cname | append: '|'
+    endfor
+    assign color_list = color_names | split: '|'
+  else
+    assign color_list = '' | split: '|'
+  endif
+  if size_option
+    assign si = size_option.position | minus: 1
+    assign current_size = current.options[si]
+  endif
+-%}
+{%- capture current_hex %}{% render 'aura-hex', name: current_color %}{% endcapture -%}
+
+<section class="aura s-product" data-aura-product style="--aura: {{ current_hex | strip }}">
+  {%- render 'aura-product-data', product: product -%}
+  <div class="s-product__glow" aria-hidden="true"></div>
+
+  <div class="a-wrap s-product__grid">
+    <div class="s-product__media">
+      {%- if color_option -%}
+        {%- for cname in color_list -%}
+          <div class="s-viewer{% if cname == current_color %} is-active{% endif %}" data-gallery-color="{{ cname }}">
+            {%- liquid
+              assign lead = blank
+              for m in product.media
+                if m.media_type == 'image' and m.alt contains cname
+                  assign lead = m
+                  break
+                endif
+              endfor
+            -%}
+            {%- if lead != blank -%}
+              <div class="s-viewer__main">
+                {{ lead | image_url: width: 1600 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 50vw, 100vw', widths: '540, 720, 900, 1200, 1600' }}
+                <span class="s-viewer__tag">{{ cname }}</span>
+              </div>
+            {%- endif -%}
+            <div class="s-viewer__thumbs" role="list">
+              {%- assign shown = 0 -%}
+              {%- for m in product.media -%}
+                {%- if m.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+                {%- if m.alt contains cname -%}
+                  {%- assign shown = shown | plus: 1 -%}
+                  <button
+                    type="button"
+                    role="listitem"
+                    class="s-viewer__thumb{% if shown == 1 %} is-active{% endif %}"
+                    data-thumb
+                    data-full="{{ m | image_url: width: 1600 }}"
+                    data-srcset="{{ m | image_url: width: 720 }} 720w, {{ m | image_url: width: 1200 }} 1200w, {{ m | image_url: width: 1600 }} 1600w"
+                    data-alt="{{ m.alt | escape }}"
+                    aria-label="View image {{ shown }}"
+                  >
+                    {{ m | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="s-viewer is-active">
+          {%- for m in product.media -%}
+            {%- if m.media_type != 'image' -%}{%- continue -%}{%- endif -%}
+            <div class="s-viewer__main">{{ m | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 50vw, 100vw' }}</div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="s-product__info">
+      <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="s-product__title">{{ product.title }}</h1>
+      <div class="s-product__priceline">
+        <p class="s-product__price" data-price>{{ current.price | money }}</p>
+        <p class="s-product__tax a-muted">{{ section.settings.price_note }}</p>
+      </div>
+
+      <form action="{{ routes.cart_add_url }}" method="post" class="s-product__form" data-product-form>
+        <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+
+        {%- if color_option -%}
+          <fieldset class="s-opt">
+            <legend class="s-opt__label">Choose your aura — <span data-color-label>{{ current_color }}</span></legend>
+            <div class="s-auras" role="radiogroup" aria-label="{{ color_option.name }}">
+              {%- for cname in color_list -%}
+                {%- capture hex %}{% render 'aura-hex', name: cname %}{% endcapture -%}
+                <button
+                  type="button"
+                  role="radio"
+                  class="s-aura{% if cname == current_color %} is-active{% endif %}"
+                  data-option-color="{{ cname }}"
+                  data-hex="{{ hex | strip }}"
+                  aria-checked="{% if cname == current_color %}true{% else %}false{% endif %}"
+                  style="--c: {{ hex | strip }}"
+                >
+                  <span class="s-aura__sq"></span>
+                  <span class="s-aura__name">{{ cname }}</span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endif -%}
+
+        {%- if size_option -%}
+          <fieldset class="s-opt">
+            <legend class="s-opt__label">Size</legend>
+            <div class="a-sizes" role="radiogroup" aria-label="{{ size_option.name }}">
+              {%- for value in size_option.values -%}
+                {%- assign sname = value | append: '' -%}
+                <button
+                  type="button"
+                  role="radio"
+                  class="a-size{% if sname == current_size %} is-active{% endif %}"
+                  data-option-size="{{ sname }}"
+                  aria-checked="{% if sname == current_size %}true{% else %}false{% endif %}"
+                >
+                  {{ sname }}
+                </button>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endif -%}
+
+        <button type="submit" class="a-btn a-btn--block s-product__add" data-add {% unless current.available %}disabled{% endunless %}>
+          <span data-add-label>{% if current.available %}Add to cart{% else %}Sold out{% endif %}</span>
+        </button>
+      </form>
+
+      <p class="s-product__note"><span class="s-product__pulse" aria-hidden="true"></span>{{ section.settings.note }}</p>
+
+      <dl class="s-spec">
+        {%- for block in section.blocks -%}
+          <div class="s-spec__row" {{ block.shopify_attributes }}>
+            <dt>{{ block.settings.label }}</dt>
+            <dd>{{ block.settings.value }}</dd>
+          </div>
+        {%- endfor -%}
+      </dl>
+
+      <div class="a-acc s-product__acc">
+        <details>
+          <summary>Description</summary>
+          <div class="a-acc__body">{{ product.description }}</div>
+        </details>
+        <details>
+          <summary>Shipping &amp; returns</summary>
+          <div class="a-acc__body">
+            {{ section.settings.shipping }}
+            {%- if shop.shipping_policy or shop.refund_policy -%}
+              <p>
+                {%- if shop.shipping_policy -%}<a href="{{ shop.shipping_policy.url }}">{{ shop.shipping_policy.title }}</a>{%- endif -%}
+                {%- if shop.shipping_policy and shop.refund_policy %} · {% endif -%}
+                {%- if shop.refund_policy -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+              </p>
+            {%- endif -%}
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B — Product",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Drop 01 — Aura series" },
+    { "type": "text", "id": "price_note", "label": "Price note", "default": "Shipping calculated at checkout." },
+    { "type": "text", "id": "note", "label": "Note", "default": "Limited quantities per color." },
+    { "type": "richtext", "id": "shipping", "label": "Shipping & returns", "default": "<p>Shipping costs and delivery times are shown at checkout.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Fit" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Boxy, oversized" }
+      ]
+    }
+  ]
+}
+{% endschema %}

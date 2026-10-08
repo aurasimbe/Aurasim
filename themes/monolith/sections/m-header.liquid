@@ -1,0 +1,93 @@
+{%- render 'aura-head' -%}
+
+{%- if section.settings.announcement != blank -%}
+  <div class="aura m-announce">
+    <p>{{ section.settings.announcement }}</p>
+  </div>
+{%- endif -%}
+
+<header class="aura m-header" data-header>
+  <div class="m-header__inner">
+    <button
+      type="button"
+      class="m-header__burger"
+      data-menu-toggle
+      aria-controls="MobileMenu-{{ section.id }}"
+      aria-expanded="false"
+      aria-label="Menu"
+    >
+      <span></span><span></span>
+    </button>
+
+    <nav class="m-header__nav m-header__nav--left" aria-label="Primary">
+      {%- for link in section.settings.menu_left.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a href="{{ routes.root_url }}#lookbook">Lookbook</a>
+        <a href="/pages/about">About</a>
+      {%- endfor -%}
+    </nav>
+
+    <a class="m-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 320 | image_tag: alt: shop.name, class: 'm-header__logo-img', style: 'height: 30px; width: auto' }}
+      {%- else -%}
+        AURASIM
+      {%- endif -%}
+    </a>
+
+    <nav class="m-header__nav m-header__nav--right" aria-label="Secondary">
+      {%- for link in section.settings.menu_right.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- else -%}
+        <a href="/pages/faq">FAQ</a>
+      {%- endfor -%}
+      <a href="{{ routes.cart_url }}" class="m-header__cart{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-link>
+        Cart [<span data-cart-count>{{ cart.item_count }}</span>]
+      </a>
+    </nav>
+
+    <a href="{{ routes.cart_url }}" class="m-header__cart m-header__cart--mobile{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-link aria-label="Cart">
+      [<span data-cart-count>{{ cart.item_count }}</span>]
+    </a>
+  </div>
+
+  <div class="m-menu" id="MobileMenu-{{ section.id }}">
+    <nav aria-label="Mobile">
+      {%- for link in section.settings.menu_left.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a href="{{ routes.root_url }}#lookbook">Lookbook</a>
+        <a href="/pages/about">About</a>
+      {%- endfor -%}
+      {%- for link in section.settings.menu_right.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- else -%}
+        <a href="/pages/faq">FAQ</a>
+      {%- endfor -%}
+      <a href="{{ routes.cart_url }}">Cart [<span data-cart-count>{{ cart.item_count }}</span>]</a>
+    </nav>
+    <div class="m-menu__swatches" aria-hidden="true">
+      <span style="background: var(--a-yellow)"></span>
+      <span style="background: var(--a-blue)"></span>
+      <span style="background: var(--a-red)"></span>
+      <span style="background: var(--a-pink)"></span>
+      <span style="background: var(--a-orange)"></span>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "AURASIM — Header (A)",
+  "class": "m-header-section",
+  "settings": [
+    { "type": "text", "id": "announcement", "label": "Announcement", "default": "Drop 01 — One tee. Five auras. Limited quantities." },
+    { "type": "image_picker", "id": "logo", "label": "Logo (optional — text wordmark if empty)" },
+    { "type": "link_list", "id": "menu_left", "label": "Left menu (empty = Shop / Lookbook / About)" },
+    { "type": "link_list", "id": "menu_right", "label": "Right menu (empty = FAQ)" }
+  ]
+}
+{% endschema %}

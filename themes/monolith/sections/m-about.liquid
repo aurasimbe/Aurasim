@@ -1,0 +1,62 @@
+<section class="aura m-about" aria-labelledby="AboutTitle-{{ section.id }}">
+  <div class="m-about__hero">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', sizes: '100vw', widths: '900, 1400, 1800, 2400', class: 'm-about__img' }}
+    {%- endif -%}
+    <div class="m-hero__shade" aria-hidden="true"></div>
+    <div class="m-hero__frame" aria-hidden="true"></div>
+    <div class="m-about__hero-text">
+      <p class="a-eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h1 id="AboutTitle-{{ section.id }}" data-reveal data-reveal-delay="1">{{ section.settings.title }}</h1>
+    </div>
+  </div>
+
+  <div class="a-wrap m-about__body">
+    <div class="a-rte m-about__story" data-reveal>
+      {{ page.content }}
+    </div>
+
+    <div class="m-about__pillars">
+      {%- for block in section.blocks -%}
+        <div class="m-pillar" {{ block.shopify_attributes }} data-reveal data-reveal-delay="{{ forloop.index0 | modulo: 3 }}">
+          <span class="m-pillar__sq" style="background: {% render 'aura-hex', name: block.settings.color %}"></span>
+          <h2 class="m-pillar__title">{{ block.settings.title }}</h2>
+          <p class="a-muted">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="m-about__cta" data-reveal>
+      <a class="a-btn" href="{{ routes.all_products_collection_url }}">Shop the drop</a>
+      {%- if section.settings.instagram != blank -%}
+        <a class="a-btn a-btn--ghost" href="{{ section.settings.instagram }}" target="_blank" rel="noopener">@aurasim.be ↗</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A — About",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AURASIM — About" },
+    { "type": "html", "id": "title", "label": "Title", "default": "Energy shapes<br>reality." },
+    { "type": "url", "id": "instagram", "label": "Instagram" }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "type": "select", "id": "color", "label": "Aura", "default": "Red", "options": [
+          { "value": "Yellow", "label": "Yellow" }, { "value": "Blue", "label": "Blue" }, { "value": "Red", "label": "Red" },
+          { "value": "Pink", "label": "Pink" }, { "value": "Orange", "label": "Orange" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pillar" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ]
+}
+{% endschema %}

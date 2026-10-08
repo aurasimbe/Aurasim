@@ -1,0 +1,61 @@
+<section class="aura a-page" aria-labelledby="FaqTitle-{{ section.id }}">
+  <div class="a-wrap">
+    <header class="a-page__head" data-reveal>
+      <p class="a-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 id="FaqTitle-{{ section.id }}">{{ section.settings.title }}</h1>
+      {%- if section.settings.intro != blank -%}
+        <p class="a-muted">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="a-faq">
+      <div class="a-acc a-faq__list" data-reveal>
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <p class="a-eyebrow a-faq__label" {{ block.shopify_attributes }}>{{ block.settings.heading }}</p>
+            {%- when 'question' -%}
+              <details {{ block.shopify_attributes }}>
+                <summary>{{ block.settings.question }}</summary>
+                <div class="a-acc__body">{{ block.settings.answer }}</div>
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="a-faq__contact" data-reveal>
+        <p>{{ section.settings.contact_text }}</p>
+        <a class="a-btn a-btn--ghost" href="{{ section.settings.contact_url | default: '/pages/contact' }}">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "AURASIM — FAQ",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AURASIM — Help" },
+    { "type": "text", "id": "title", "label": "Title", "default": "FAQ" },
+    { "type": "text", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "contact_text", "label": "Contact text", "default": "Still got a question? We answer every message." },
+    { "type": "url", "id": "contact_url", "label": "Contact link" }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Group heading",
+      "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Orders" }]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "AURASIM — FAQ" }]
+}
+{% endschema %}

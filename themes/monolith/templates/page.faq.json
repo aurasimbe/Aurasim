@@ -1,0 +1,98 @@
+{
+  "sections": {
+    "main": {
+      "type": "aura-faq",
+      "settings": {
+        "eyebrow": "AURASIM — Help",
+        "title": "FAQ",
+        "intro": "Everything about the drop, your order and your tee.",
+        "contact_text": "Still got a question? We answer every message.",
+        "contact_url": "/pages/contact"
+      },
+      "blocks": {
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "heading": "The tee"
+          }
+        },
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How does the AURA Tee fit?",
+            "answer": "<p>It's a boxy, oversized cut with dropped shoulders and a cropped length — exactly what you see on the crew in the photos. Want it closer to the body? Take one size down.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What's the difference between the five colors?",
+            "answer": "<p>The tee itself is white in every version. The color is the aura printed around the AS monogram on the front and back: Yellow, Blue, Red, Pink or Orange.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Will a color come back once it's sold out?",
+            "answer": "<p>Drops are made in limited quantities. Join the list at the bottom of the page and you'll be the first to know if anything comes back.</p>"
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "heading": "Orders"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Where do you ship?",
+            "answer": "<p>Available countries, shipping costs and delivery times are shown at checkout before you pay.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return or exchange?",
+            "answer": "<p>Check our refund policy (link in the footer). Questions about an order? Send us a message with your order number.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Which payment methods do you accept?",
+            "answer": "<p>All payment methods available for your country are shown at checkout. Payments are processed securely by Shopify.</p>"
+          }
+        },
+        "h3": {
+          "type": "heading",
+          "settings": {
+            "heading": "Care"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "question": "How should I wash it?",
+            "answer": "<p>To keep the print sharp: wash inside out, cold, and skip the tumble dryer. Don't iron directly on the print.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "q1",
+        "q2",
+        "q3",
+        "h2",
+        "q4",
+        "q5",
+        "q6",
+        "h3",
+        "q7"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
