@@ -299,3 +299,47 @@
 .s-about__item-title { font-size: 1.5rem; margin-bottom: .5rem !important; }
 .s-about__item p { font-size: .9rem; line-height: 1.7; }
 .s-about__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ==========================================================================
+   Mobile mirrors desktop: same menu, same expanding panels, same grids.
+   Only long text blocks (chapters text, product info, about) stack.
+   ========================================================================== */
+@media (max-width: 899px) {
+  .s-header__inner { height: auto; flex-wrap: wrap; row-gap: .6rem; padding-top: .7rem; padding-bottom: .7rem; }
+  .s-header__nav { display: flex; order: 3; width: 100%; justify-content: space-between; gap: .5rem; font-size: .68rem; }
+  .s-header__nav a span { display: none; }
+  .s-header__burger, .s-menu { display: none !important; }
+}
+@media (max-width: 749px) {
+  .s-hero__panels { height: clamp(380px, 62svh, 560px); overflow: visible; scroll-snap-type: none; gap: 4px; }
+  .s-panel { flex: 1 1 0; aspect-ratio: auto; }
+  .s-panel.is-active { flex: 3.2 1 0; aspect-ratio: auto; }
+  .s-panel__img { filter: grayscale(.6) brightness(.7); }
+  .s-panel.is-active .s-panel__img { filter: none; }
+  .s-panel__name, .s-panel__go { opacity: 0; transform: translateY(6px); }
+  .s-panel.is-active .s-panel__name, .s-panel.is-active .s-panel__go { opacity: 1; transform: none; }
+  .s-panel::after { transform: scaleX(0); }
+  .s-panel.is-active::after { transform: scaleX(1); }
+  .s-panel__num { display: none; }
+  .s-panel__label { left: 8px; right: 8px; bottom: 12px; gap: .4rem; font-size: .62rem; }
+  .s-panel.is-active .s-panel__name { font-size: 1rem; }
+  .s-hero__line--aura { text-align: right; }
+  .s-hero__foot .a-btn { width: auto; }
+}
+@media (max-width: 989px) {
+  /* Product viewer: thumbnails column on the left, like desktop */
+  .s-viewer.is-active { grid-template-columns: 56px minmax(0, 1fr); gap: 6px; }
+  .s-viewer__thumbs {
+    order: -1; flex-direction: column; overflow-y: auto;
+    max-height: calc((100vw - 2 * var(--a-gutter) - 62px) * 1.5);
+  }
+  .s-viewer__thumb { flex: 0 0 auto; width: 100%; }
+
+  /* Collection: 3 columns, like desktop */
+  .s-collection__grid { grid-template-columns: repeat(3, 1fr); gap: 16px 6px; }
+  .s-collection__grid .a-card__info { flex-direction: column; gap: .15rem; font-size: .6rem; }
+  .s-card__tag { font-size: .5rem; left: 4px; top: 4px; padding: .2rem .35rem; }
+
+  /* Footer: link columns side by side, like desktop */
+  .s-footer__grid { grid-template-columns: repeat(3, 1fr); font-size: .75rem; }
+}

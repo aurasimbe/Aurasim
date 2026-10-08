@@ -114,7 +114,13 @@
         if (hex) wrap.style.setProperty('--aura', hex.getAttribute('data-hex'));
       }
       buttons.forEach(function (b) {
-        b.addEventListener('click', function () { activate(b.getAttribute('data-aura-switch')); });
+        b.addEventListener('click', function (e) {
+          // Touch screens: first tap opens a panel, second tap follows its link
+          if (b.tagName === 'A' && !b.classList.contains('is-active') && !window.matchMedia('(hover: hover)').matches) {
+            e.preventDefault();
+          }
+          activate(b.getAttribute('data-aura-switch'));
+        });
         b.addEventListener('mouseenter', function () {
           if (window.matchMedia('(hover: hover)').matches) activate(b.getAttribute('data-aura-switch'));
         });

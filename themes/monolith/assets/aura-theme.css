@@ -270,3 +270,53 @@
 .m-pillar__title { font-size: 1.4rem; }
 .m-pillar p { font-size: .88rem; line-height: 1.7; }
 .m-about__cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ==========================================================================
+   Mobile mirrors desktop: same menu, same photos, same grids.
+   Only long text blocks (pick, manifesto, details, product info) stack.
+   ========================================================================== */
+@media (max-width: 899px) {
+  .m-header__inner {
+    height: auto; grid-template-columns: 1fr 1fr;
+    grid-template-areas: "logo logo" "left right";
+    row-gap: .55rem; padding-top: .8rem; padding-bottom: .7rem;
+  }
+  .m-header__logo { grid-area: logo; }
+  .m-header__nav { display: flex; gap: .9rem; font-size: .64rem; letter-spacing: .06em; }
+  .m-header__nav--left { grid-area: left; }
+  .m-header__nav--right { grid-area: right; justify-self: end; }
+  .m-header__burger, .m-header__cart--mobile, .m-menu { display: none !important; }
+}
+@media (max-width: 749px) {
+  .m-hero__corner { display: block; bottom: 22px; font-size: .58rem; }
+  .m-hero__corner--l { left: 24px; }
+  .m-hero__corner--r { right: 24px; }
+  .m-hero__ctas { width: auto; max-width: none; }
+  .m-hero__ctas .a-btn { width: auto; padding: 0 1.1rem; font-size: .78rem; min-height: 46px; }
+}
+@media (max-width: 989px) {
+  /* Lookbook: 3 columns with the staggered middle column, like desktop */
+  .m-lookbook__grid { grid-template-columns: repeat(3, 1fr); gap: 8px; padding-bottom: 28px; }
+  .m-look:nth-child(3n+2), .m-look:nth-child(3n+2).is-in { transform: translateY(28px); }
+  .m-look figcaption { font-size: .56rem; letter-spacing: .04em; }
+
+  /* Product gallery: lead image + grid (no sideways scrolling) */
+  .m-product__galleries { margin: 0; }
+  .m-gallery.is-active {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    overflow: visible; padding: 0; scroll-snap-type: none;
+  }
+  .m-gallery__item, .m-gallery__item--lead { flex: none; aspect-ratio: 2 / 3; }
+  .m-gallery__item--lead { grid-column: 1 / -1; aspect-ratio: 4 / 5; }
+
+  /* All five auras in one row, like desktop */
+  .m-others { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; overflow: visible; }
+  .m-others__card { flex: none; }
+  .m-others .a-card__info, .m-collection__grid .a-card__info { flex-direction: column; gap: .15rem; font-size: .6rem; }
+
+  /* Collection: 3 columns, like desktop */
+  .m-collection__grid { grid-template-columns: repeat(3, 1fr); gap: 16px 8px; }
+}
+@media (max-width: 599px) {
+  .m-footer__cols { grid-template-columns: repeat(3, 1fr); font-size: .75rem; }
+}
