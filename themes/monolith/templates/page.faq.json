@@ -47,7 +47,7 @@
           "type": "question",
           "settings": {
             "question": "Where do you ship?",
-            "answer": "<p><strong>Belgium:</strong> from €6.90, <strong>free from €70</strong>. Express from €11.<br><strong>France, Netherlands, Luxembourg, Germany:</strong> from €9.90, free from €120.<br><strong>Rest of Europe</strong> (incl. UK, Switzerland, Norway): from €12.90.<br><strong>Worldwide</strong> (US, Canada, Japan, Australia and more): from €19.90.</p><p>The exact price depends on the weight of your order and is shown at checkout. Orders ship from Belgium.</p>"
+            "answer": "<p><strong>Belgium:</strong> from €6.90. Express from €11.<br><strong>France, Netherlands, Luxembourg, Germany:</strong> from €9.90, free from €120.<br><strong>Rest of Europe</strong> (incl. UK, Switzerland, Norway): from €12.90.<br><strong>Worldwide</strong> (US, Canada, Japan, Australia and more): from €19.90.</p><p>The exact price depends on the weight of your order and is shown at checkout. Orders ship from Belgium.</p>"
           }
         },
         "q5": {
