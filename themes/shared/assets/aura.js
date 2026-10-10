@@ -256,6 +256,15 @@
         });
       });
 
+      root.querySelectorAll('[data-open-size-guide]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var guide = root.querySelector('[data-size-guide]');
+          if (!guide) return;
+          guide.open = true;
+          guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
       if (form) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();

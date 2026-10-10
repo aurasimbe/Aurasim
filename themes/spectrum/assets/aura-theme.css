@@ -343,3 +343,12 @@
   /* Footer: link columns side by side, like desktop */
   .s-footer__grid { grid-template-columns: repeat(3, 1fr); font-size: .75rem; }
 }
+
+/* Size guide link next to the Size label */
+.s-opt__label--row { display: flex; justify-content: space-between; align-items: baseline; width: 100%; }
+.s-sizeguide-link {
+  background: none; border: 0; padding: 0; cursor: pointer; color: var(--a-fg);
+  font-family: var(--a-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+  border-bottom: 1px solid currentColor;
+}
+.s-sizeguide-link:hover { color: var(--aura); }

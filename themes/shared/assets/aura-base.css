@@ -239,3 +239,10 @@ html.aura-menu-open { overflow: hidden; }
 .a-faq__label { padding: 2.6rem 0 1rem; border-bottom: 1px solid var(--a-line); }
 .a-faq__label:first-child { padding-top: 0; }
 .a-faq__contact { margin-top: 3.5rem; text-align: center; display: grid; gap: 1rem; justify-items: center; color: var(--a-grey); font-size: .9rem; }
+
+/* Size guide table */
+.a-sizetable-wrap { overflow-x: auto; margin-bottom: .9rem; }
+.a-sizetable { width: 100%; border-collapse: collapse; font-size: .8rem; font-variant-numeric: tabular-nums; color: var(--a-fg); }
+.a-sizetable th, .a-sizetable td { padding: .6rem .5rem; border: 1px solid var(--a-line); text-align: center; white-space: nowrap; }
+.a-sizetable thead th { font-weight: 600; text-transform: uppercase; letter-spacing: .06em; background: var(--a-bg-2); }
+.a-sizetable tbody th { text-align: left; font-weight: 500; color: var(--a-grey); }

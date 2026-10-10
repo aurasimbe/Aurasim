@@ -121,7 +121,12 @@
 
         {%- if size_option -%}
           <fieldset class="s-opt">
-            <legend class="s-opt__label">Size</legend>
+            <legend class="s-opt__label s-opt__label--row">
+              <span>Size</span>
+              {%- if section.settings.size_guide != blank -%}
+                <button type="button" class="s-sizeguide-link" data-open-size-guide>Size guide</button>
+              {%- endif -%}
+            </legend>
             <div class="a-sizes" role="radiogroup" aria-label="{{ size_option.name }}">
               {%- for value in size_option.values -%}
                 {%- assign sname = value | append: '' -%}
@@ -156,6 +161,12 @@
       </dl>
 
       <div class="a-acc s-product__acc">
+        {%- if section.settings.size_guide != blank -%}
+          <details id="SizeGuide-{{ section.id }}" data-size-guide>
+            <summary>Size guide</summary>
+            <div class="a-acc__body">{{ section.settings.size_guide }}</div>
+          </details>
+        {%- endif -%}
         <details>
           <summary>Description</summary>
           <div class="a-acc__body">{{ product.description }}</div>
@@ -185,7 +196,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Drop 01 — Aura series" },
     { "type": "text", "id": "price_note", "label": "Price note", "default": "Shipping calculated at checkout." },
     { "type": "text", "id": "note", "label": "Note", "default": "Limited quantities per color." },
-    { "type": "richtext", "id": "shipping", "label": "Shipping & returns", "default": "<p>Shipping costs and delivery times are shown at checkout.</p>" }
+    { "type": "richtext", "id": "shipping", "label": "Shipping & returns", "default": "<p>Shipping costs and delivery times are shown at checkout.</p>" },
+    { "type": "html", "id": "size_guide", "label": "Size guide (HTML table)" }
   ],
   "blocks": [
     {
