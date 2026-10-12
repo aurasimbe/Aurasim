@@ -39,7 +39,7 @@ Nous livrons actuellement dans les pays suivants uniquement :
 - Standard : à partir de 6,90 €
 - Express : à partir de 11,00 €
 
-**France, Pays-Bas, Luxembourg, Allemagne**
+**France, Pays-Bas, Luxembourg, Allemagne, Espagne, Italie**
 - Standard : à partir de 9,90 €
 - Livraison offerte dès 120 € d'achat
 
