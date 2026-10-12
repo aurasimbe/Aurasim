@@ -33,20 +33,26 @@ Si vous recevez un article défectueux, endommagé ou qui ne correspond pas à v
 ## 2. Politique d'expédition
 
 ### Tarifs de livraison
+Nous livrons actuellement dans les pays suivants uniquement :
+
 **Belgique**
-- Standard : 7,00 €
-- Standard **offerte dès 70 € d'achat**
-- Express : 11,00 €
+- Standard : à partir de 6,90 €
+- Express : à partir de 11,00 €
 
-**International** (Union européenne, Royaume-Uni, Suisse, Norvège, États-Unis, Canada, Australie, Japon et autres pays proposés au paiement) : 16,00 €
+**France, Pays-Bas, Luxembourg, Allemagne**
+- Standard : à partir de 9,90 €
+- Livraison offerte dès 120 € d'achat
 
-Les frais de livraison exacts et les pays disponibles sont toujours affichés au moment du paiement, avant validation de votre commande.
+**États-Unis**
+- Standard : à partir de 19,90 €
+
+Le prix dépend du poids de la commande. Les frais de livraison exacts sont toujours affichés au moment du paiement, avant validation de votre commande.
 
 ### Préparation et délais
 Les commandes sont préparées et expédiées depuis la Belgique. Le délai de livraison estimé est indiqué au moment du paiement selon le mode choisi. Vous recevez un e-mail de confirmation d'expédition avec un lien de suivi dès que votre colis est en route.
 
-### Droits et taxes hors Union européenne
-Pour les livraisons hors de l'Union européenne, des droits de douane ou taxes d'importation peuvent être facturés par le pays de destination. Ces frais sont à la charge du destinataire.
+### Droits et taxes pour les États-Unis
+Pour les livraisons vers les États-Unis, des droits de douane ou taxes d'importation peuvent être facturés par le pays de destination. Ces frais sont à la charge du destinataire.
 
 ### Problème de livraison
 Colis en retard, endommagé ou adresse erronée ? Écrivez-nous à juniorsim453@gmail.com avec votre numéro de commande.
